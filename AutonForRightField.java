@@ -100,7 +100,7 @@ public class AutonForRightField extends LinearOpMode {
            Arm.setPower(armVertical);
        }
     }
-        //Code for moving in different directions
+        //Code for moving in different directions. may have to reverse
         public void moveForward(seconds) {
         //sets current time
         long durationSucks = System.CurrentTimeMillis();
@@ -108,7 +108,7 @@ public class AutonForRightField extends LinearOpMode {
         long stop = (durationSucks + seconds*1000);
         while (System. currentTimeMillis() < stop) {
             //not even sure if this works or not. We can test it anyway
-            moveWheel(0,0.5);
+            moveWheel(0,1);
         }
     }
         public void moveBackward(seconds) {
@@ -118,7 +118,7 @@ public class AutonForRightField extends LinearOpMode {
             long stop = (durationSucks + seconds*1000);
             while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
-                moveWheel(0,-0.5);
+                moveWheel(0,-1);
         }
     }
     //Hopefully strafe code works
@@ -129,7 +129,7 @@ public class AutonForRightField extends LinearOpMode {
             long stop = (durationSucks + seconds*1000);
             while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
-                moveWheel(0.5,0);
+                moveWheel(1,0);
         }
     }
         public void strafeLeft(seconds) {
@@ -139,7 +139,7 @@ public class AutonForRightField extends LinearOpMode {
             long stop = (durationSucks + seconds*1000);
                 while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
-                moveWheel(-0.5,0);
+                moveWheel(-1,0);
         }
     }
     
