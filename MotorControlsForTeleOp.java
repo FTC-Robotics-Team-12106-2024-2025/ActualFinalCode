@@ -146,7 +146,7 @@ public class MotorControlsForTeleOp extends LinearOpMode {
              fl = fr = bl = br = -1;
          }
         if (rotateRight && rotateLeft == false) {
-            if (x == 0 || y == 0) {
+            if (x == 0 && y == 0) {
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
