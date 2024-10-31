@@ -104,7 +104,7 @@ public class AutonForRightField extends LinearOpMode {
         //sets current time
         long durationSucks = System.CurrentTimeMillis();
         //stops current time
-        long stop = (durationSucks + seconds*1000);
+        long stop = (durationSucks + seconds*100); //Im using tenths of a seconds, not seconds btw
         while (System. currentTimeMillis() < stop) {
             //not even sure if this works or not. We can test it anyway
             moveWheel(0,0.5);
@@ -114,7 +114,7 @@ public class AutonForRightField extends LinearOpMode {
             //sets current time
             long durationSucks = System.CurrentTimeMillis();
             //stops current time
-            long stop = (durationSucks + seconds*1000);
+            long stop = (durationSucks + seconds*100);
             while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
                 moveWheel(0,-0.5);
@@ -125,7 +125,7 @@ public class AutonForRightField extends LinearOpMode {
             //sets current time
             long durationSucks = System.CurrentTimeMillis();
             //stops current time
-            long stop = (durationSucks + seconds*1000);
+            long stop = (durationSucks + seconds*100);
             while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
                 moveWheel(0.5,0);
@@ -135,7 +135,7 @@ public class AutonForRightField extends LinearOpMode {
             //sets current time
             long durationSucks = System.CurrentTimeMillis();
             //stops current time
-            long stop = (durationSucks + seconds*1000);
+            long stop = (durationSucks + seconds*100);
                 while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
                 moveWheel(-0.5,0);
@@ -145,7 +145,7 @@ public class AutonForRightField extends LinearOpMode {
             //sets current time
             long durationSucks = System.CurrentTimeMillis();
             //stops current time
-            long stop = (durationSucks + seconds*1000);
+            long stop = (durationSucks + seconds*100);
                 while (System. currentTimeMillis() < stop) {
                 turn(true,false);
         }
@@ -154,7 +154,7 @@ public class AutonForRightField extends LinearOpMode {
             //sets current time
             long durationSucks = System.CurrentTimeMillis();
             //stops current time
-            long stop = (durationSucks + seconds*1000);
+            long stop = (durationSucks + seconds*100);
                 while (System. currentTimeMillis() < stop) {
                 turn(false,true);
         }
