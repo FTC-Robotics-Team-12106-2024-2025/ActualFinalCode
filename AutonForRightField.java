@@ -108,7 +108,7 @@ public class AutonForRightField extends LinearOpMode {
         long stop = (durationSucks + seconds*1000);
         while (System. currentTimeMillis() < stop) {
             //not even sure if this works or not. We can test it anyway
-            moveWheel(0,1);
+            moveWheel(0,0.5);
         }
     }
         public void moveBackward(seconds) {
@@ -118,7 +118,7 @@ public class AutonForRightField extends LinearOpMode {
             long stop = (durationSucks + seconds*1000);
             while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
-                moveWheel(0,-1);
+                moveWheel(0,-0.5);
         }
     }
     //Hopefully strafe code works
@@ -129,7 +129,7 @@ public class AutonForRightField extends LinearOpMode {
             long stop = (durationSucks + seconds*1000);
             while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
-                moveWheel(1,0);
+                moveWheel(0.5,0);
         }
     }
         public void strafeLeft(seconds) {
@@ -139,7 +139,7 @@ public class AutonForRightField extends LinearOpMode {
             long stop = (durationSucks + seconds*1000);
                 while (System. currentTimeMillis() < stop) {
                 //not even sure if this works or not. We can test it anyway
-                moveWheel(-1,0);
+                moveWheel(-0.5,0);
         }
     }
        public void rotateLeft(seconds) {
