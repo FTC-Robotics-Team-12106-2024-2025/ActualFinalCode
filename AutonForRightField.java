@@ -15,15 +15,11 @@ public class AutonForRightField extends LinearOpMode {
     public DcMotor leftSlide = null;
     public DcMotor rightSlide = null;
     public DcMotor Arm = null;
-    @Override
-   
-    
-
-    public void moveWheel(float x,float y) {
-         float fl = (y+x);
-         float fr = (x-y);
-         float bl = (y-x);
-         float br = (-y-x);
+        public void moveWheel(double x,double y) {
+         double fl = (y+x);
+         double fr = (x-y);
+         double bl = (y-x);
+         double br = (-y-x);
         double wheelCPR = 423.2116; //Counts per revolution
          int Flposition = frontLeft.getCurrentPosition();
          int Frposition = frontRight.getCurrentPosition();
@@ -54,7 +50,7 @@ public class AutonForRightField extends LinearOpMode {
                 brModifier = leadMotor/Brrevolutions;
             }
         //stops it from going greater than 1/-1
-         float maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
+         double maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
          //powers the motor for wheels
         frontLeft.setPower(fl/maxNumber*flModifier);
         frontRight.setPower(fr/maxNumber*frModifier);
@@ -68,6 +64,35 @@ public class AutonForRightField extends LinearOpMode {
     }
    public void turn(boolean rotateLeft, boolean rotateRight) {
         double fl, fr, bl, br;
+        double wheelCPR = 423.2116; //Counts per revolution
+         int Flposition = frontLeft.getCurrentPosition();
+         int Frposition = frontRight.getCurrentPosition();
+         int Blposition = backLeft.getCurrentPosition();
+         int Brposition = backRight.getCurrentPosition();
+         //YAY MORE VARIABLES
+         double Flrevolutions = Flposition/wheelCPR;
+         double Frrevolutions = Frposition/wheelCPR;
+         double Blrevolutions = Blposition/wheelCPR;
+         double Brrevolutions = Brposition/wheelCPR;
+        double leadMotor = Math.min(Math.min(Flrevolutions,Frrevolutions),Math.min(Blrevolutions,Brrevolutions));
+         //Modifier Variables YAY
+        // double linearMotor = Math.min(Lsposition,Rsposition);
+         double flModifier = 1;
+         double frModifier = 1;
+         double blModifier = 1;
+         double brModifier = 1;
+            if (Flrevolutions > leadMotor) {
+                flModifier = leadMotor/Flrevolutions;
+            }
+            if (Frrevolutions > leadMotor) {
+                frModifier = leadMotor/Frrevolutions;
+            }
+            if (Blrevolutions > leadMotor) {
+                blModifier = leadMotor/Blrevolutions;
+            }
+            if (Brrevolutions > leadMotor) {
+                brModifier = leadMotor/Brrevolutions;
+            }
         fl = fr = bl = br = 0;
         if (rotateRight) {
             fl = 0.5*flModifier;
@@ -100,9 +125,9 @@ public class AutonForRightField extends LinearOpMode {
        }
     }
         //Code for moving in different directions. may have to reverse
-        public void moveForward(seconds) {
+        public void moveForward(int seconds) {
         //sets current time
-        long durationSucks = System.CurrentTimeMillis();
+        long durationSucks = System.currentTimeMillis();
         //stops current time
         long stop = (durationSucks + seconds*100); //Im using tenths of a seconds, not seconds btw
         while (System. currentTimeMillis() < stop) {
@@ -110,9 +135,9 @@ public class AutonForRightField extends LinearOpMode {
             moveWheel(0,0.5);
         }
     }
-        public void moveBackward(seconds) {
+        public void moveBackward(int seconds) {
             //sets current time
-            long durationSucks = System.CurrentTimeMillis();
+            long durationSucks = System.currentTimeMillis();
             //stops current time
             long stop = (durationSucks + seconds*100);
             while (System. currentTimeMillis() < stop) {
@@ -121,9 +146,9 @@ public class AutonForRightField extends LinearOpMode {
         }
     }
     //Hopefully strafe code works
-        public void strafeRight(seconds) {
+        public void strafeRight(int seconds) {
             //sets current time
-            long durationSucks = System.CurrentTimeMillis();
+            long durationSucks = System.currentTimeMillis();
             //stops current time
             long stop = (durationSucks + seconds*100);
             while (System. currentTimeMillis() < stop) {
@@ -131,9 +156,9 @@ public class AutonForRightField extends LinearOpMode {
                 moveWheel(0.5,0);
         }
     }
-        public void strafeLeft(seconds) {
+        public void strafeLeft(int seconds) {
             //sets current time
-            long durationSucks = System.CurrentTimeMillis();
+            long durationSucks = System.currentTimeMillis();
             //stops current time
             long stop = (durationSucks + seconds*100);
                 while (System. currentTimeMillis() < stop) {
@@ -141,18 +166,18 @@ public class AutonForRightField extends LinearOpMode {
                 moveWheel(-0.5,0);
         }
     }
-       public void rotateLeft(seconds) {
+       public void rotateLeft(int seconds) {
             //sets current time
-            long durationSucks = System.CurrentTimeMillis();
+            long durationSucks = System.currentTimeMillis();
             //stops current time
             long stop = (durationSucks + seconds*100);
                 while (System. currentTimeMillis() < stop) {
                 turn(true,false);
         }
     }
-    public void rotateRight(seconds) {
+    public void rotateRight(int seconds) {
             //sets current time
-            long durationSucks = System.CurrentTimeMillis();
+            long durationSucks = System.currentTimeMillis();
             //stops current time
             long stop = (durationSucks + seconds*100);
                 while (System. currentTimeMillis() < stop) {
@@ -188,5 +213,6 @@ public class AutonForRightField extends LinearOpMode {
             telemetry.update();
 
     }
+   
+    }
 }
-
