@@ -181,9 +181,11 @@ public class AutonForRightField extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
           if (opModeIsActive()) {
+            sleep(1000);
+          }
+         while (opModeIsActive()) {
             //Updates the thingy
             telemetry.update();
-          }
 
     }
 }
