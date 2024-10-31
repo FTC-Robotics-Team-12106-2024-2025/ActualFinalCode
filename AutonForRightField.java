@@ -17,43 +17,10 @@ public class AutonForRightField extends LinearOpMode {
     public DcMotor rightSlide = null;
     public DcMotor Arm = null;
     @Override
-    public void runOpMode() {
-        DcMotor frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        DcMotor frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        DcMotor backLeft = hardwareMap.get(DcMotor.class, "backLeft"); 
-        DcMotor backRight = hardwareMap.get(DcMotor.class, "backRight");
-        DcMotor leftSlide = hardwareMap.get(DcMotor.class,"leftSlide");
-        DcMotor rightSlide = hardwareMap.get(DcMotor.class,"rightSlide");
-        DcMotor Arm = hardwareMap.get(DcMotor.class,"Arm");
-        //Not even sure it runs
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //More code
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        waitForStart();
-          if (opModeIsActive()) {
-
-  }
-
+   
     }
-    public void moveForward(seconds) {
-        //sets current time
-        long durationSucks = System.CurrentTimeMillis();
-        //stops current time
-        long stop = (durationSucks + seconds*1000);
-        while (System. currentTimeMillis() < stop) {
-            //not even sure if this works or not. We can test it anyway
-            moveWheel(0,-100);
-            telemetry.addData("Fr value",fr)
-            telemetry.update();
-        }
-    }
-    public void  moveWheel(float x,float y) {
+
+    public void moveWheel(float x,float y) {
          float fl = (y+x);
          float fr = (x-y);
          float bl = (y-x);
@@ -129,6 +96,41 @@ public class AutonForRightField extends LinearOpMode {
            Arm.setPower(armVertical);
        }
     }
+        public void moveForward(seconds) {
+        //sets current time
+        long durationSucks = System.CurrentTimeMillis();
+        //stops current time
+        long stop = (durationSucks + seconds*1000);
+        while (System. currentTimeMillis() < stop) {
+            //not even sure if this works or not. We can test it anyway
+            moveWheel(0,-100);
+            telemetry.addData("Fl value",fr)
+            telemetry.update();
+        }
+    }
+     public void runOpMode() {
+        DcMotor frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        DcMotor frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        DcMotor backLeft = hardwareMap.get(DcMotor.class, "backLeft"); 
+        DcMotor backRight = hardwareMap.get(DcMotor.class, "backRight");
+        DcMotor leftSlide = hardwareMap.get(DcMotor.class,"leftSlide");
+        DcMotor rightSlide = hardwareMap.get(DcMotor.class,"rightSlide");
+        DcMotor Arm = hardwareMap.get(DcMotor.class,"Arm");
+        //Not even sure it runs
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //More code
+        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        waitForStart();
+          if (opModeIsActive()) {
+
+          }
 
     }
+}
 
