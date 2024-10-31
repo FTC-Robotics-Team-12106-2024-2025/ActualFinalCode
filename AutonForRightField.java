@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import java.time.Duration; //Imma hope this works. If not we're cooked
 @Autonomous(name="Auton For Right Field", group="Robot")
 public class AutonForRightField extends LinearOpMode {
     public DcMotor frontLeft = null;
