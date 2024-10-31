@@ -78,8 +78,8 @@ public class MotorControlsForTeleOp extends LinearOpMode {
          //For down-movement of linear slide
          boolean verticalDown = RsFault.dpad_down;
          
-         double armUp = RsFault.left_trigger;
-         double armDown = RsFault.right_trigger;
+         double armOpen = RsFault.left_trigger;
+         double armClose = RsFault.right_trigger;
          double clawPosX = RsFault.left_stick_x;
          double clawPosY = -RsFault.left_stick_y;
          
@@ -174,8 +174,8 @@ public class MotorControlsForTeleOp extends LinearOpMode {
             rightSlide.setPower(0);
         }
         //Arm Code I USED TRIGGERS LETS GOOO
-        Arm.setPower(armUp);
-        Arm.setPower(-armDown);
+        Arm.setPower(armOpen);
+        Arm.setPower(-armClose);
         if (clawPosY > 0) {
             Claw.setPosition(1);
         } 
