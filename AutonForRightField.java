@@ -71,16 +71,16 @@ public class AutonForRightField extends LinearOpMode {
         double fl, fr, bl, br;
         fl = fr = bl = br = 0;
         if (rotateRight) {
-            fl = 1;
-            fr = 1;
-            bl = 1;
-            br = 1;
+            fl = 0.5*flModifier;
+            fr = 0.5*frModifier;
+            bl = 0.5*blModifier;
+            br = 0.5*brModifier;
          }
          if (rotateLeft) {
-             fl = -1;
-             fr = -1;
-             bl = -1;
-             br = -1;
+             fl = -0.5*flModifier;
+             fr = -0.5*frModifier;
+             bl = -0.5*blModifier;
+             br = -0.5*brModifier;
          }
     } 
     public void linearVertical(float verticalPower) {
@@ -181,7 +181,8 @@ public class AutonForRightField extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
           if (opModeIsActive()) {
-            sleep(1000);
+            moveForward(1);
+            
           }
          while (opModeIsActive()) {
             //Updates the thingy
