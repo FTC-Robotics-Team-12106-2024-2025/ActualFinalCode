@@ -204,13 +204,6 @@ public class MotorControlsForTeleOp extends LinearOpMode {
          double bl = (triY-triX);
          double br = (-triY-triX);
          */
-         //Rotation Code, adjust it l8r
-         if (rotateRight) {
-            fl = fr = bl = br = 1;
-         }
-         if (rotateLeft) {
-             fl = fr = bl = br = -1;
-         }
         //stops it from going greater than 1/-1
          maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
          //powers the motor for wheels
