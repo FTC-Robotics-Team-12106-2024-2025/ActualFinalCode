@@ -140,10 +140,16 @@ public class MotorControlsForTeleOp extends LinearOpMode {
          double bl = (y-x);
          double br = (-y-x);
            if (rotateRight) {
-            fl = fr = bl = br = 1;
+            fl = 1*flModifier;
+            fr = 1*frModifier;
+            bl = 1*blModifier;
+            br = 1*brModifier;
          }
          if (rotateLeft) {
-             fl = fr = bl = br = -1;
+             fl = -1*flModifier;
+             fr = -1*frModifier;
+             bl = -1*blModifier;
+             br = -1*brModifier;
          }
         if (rotateRight && rotateLeft == false) {
             if (x == 0 && y == 0) {
