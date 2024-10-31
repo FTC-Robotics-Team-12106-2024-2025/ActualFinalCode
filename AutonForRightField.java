@@ -61,7 +61,11 @@ public class AutonForRightField extends LinearOpMode {
         frontRight.setPower(fr/maxNumber*frModifier);
         backLeft.setPower(bl/maxNumber*blModifier);
         backRight.setPower(br/maxNumber*brModifier); 
-        
+        //Should do telemetery data thingy I hate this.
+        telemetry.addData("Front Left",fl/maxNumber*flModifier);
+        telemetry.addData("Front Right",fr/maxNumber*frModifier);
+        telemetry.addData("Back Left",bl/maxNumber*blModifier);
+        telemetry.addData("Back Right",br/maxNumber*brModifier);
     }
    public void turn(boolean rotateLeft, boolean rotateRight) {
         double fl, fr, bl, br;
@@ -96,6 +100,7 @@ public class AutonForRightField extends LinearOpMode {
            Arm.setPower(armVertical);
        }
     }
+        //Code for moving in different directions
         public void moveForward(seconds) {
         //sets current time
         long durationSucks = System.CurrentTimeMillis();
@@ -103,11 +108,41 @@ public class AutonForRightField extends LinearOpMode {
         long stop = (durationSucks + seconds*1000);
         while (System. currentTimeMillis() < stop) {
             //not even sure if this works or not. We can test it anyway
-            moveWheel(0,-100);
-            telemetry.addData("Fl value",fr)
-            telemetry.update();
+            moveWheel(0,0.5);
         }
     }
+        public void moveBackward(seconds) {
+            //sets current time
+            long durationSucks = System.CurrentTimeMillis();
+            //stops current time
+            long stop = (durationSucks + seconds*1000);
+            while (System. currentTimeMillis() < stop) {
+                //not even sure if this works or not. We can test it anyway
+                moveWheel(0,-0.5);
+        }
+    }
+    //Hopefully strafe code works
+        public void strafeRight(seconds) {
+            //sets current time
+            long durationSucks = System.CurrentTimeMillis();
+            //stops current time
+            long stop = (durationSucks + seconds*1000);
+            while (System. currentTimeMillis() < stop) {
+                //not even sure if this works or not. We can test it anyway
+                moveWheel(0.5,0);
+        }
+    }
+        public void strafeLeft(seconds) {
+            //sets current time
+            long durationSucks = System.CurrentTimeMillis();
+            //stops current time
+            long stop = (durationSucks + seconds*1000);
+                while (System. currentTimeMillis() < stop) {
+                //not even sure if this works or not. We can test it anyway
+                moveWheel(-0.5,0);
+        }
+    }
+    
      public void runOpMode() {
         DcMotor frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         DcMotor frontRight = hardwareMap.get(DcMotor.class, "frontRight");
@@ -128,7 +163,8 @@ public class AutonForRightField extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
           if (opModeIsActive()) {
-
+            //Updates the thingy
+            telemetry.update();
           }
 
     }
