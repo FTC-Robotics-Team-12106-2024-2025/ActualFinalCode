@@ -142,6 +142,24 @@ public class AutonForRightField extends LinearOpMode {
                 moveWheel(-1,0);
         }
     }
+       public void rotateLeft(seconds) {
+            //sets current time
+            long durationSucks = System.CurrentTimeMillis();
+            //stops current time
+            long stop = (durationSucks + seconds*1000);
+                while (System. currentTimeMillis() < stop) {
+                turn(true,false);
+        }
+    }
+    public void rotateRight(seconds) {
+            //sets current time
+            long durationSucks = System.CurrentTimeMillis();
+            //stops current time
+            long stop = (durationSucks + seconds*1000);
+                while (System. currentTimeMillis() < stop) {
+                turn(false,true);
+        }
+    }
     
      public void runOpMode() {
         DcMotor frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
