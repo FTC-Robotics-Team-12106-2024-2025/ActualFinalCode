@@ -18,7 +18,7 @@ public class AutonForRightField extends LinearOpMode {
     public DcMotor Arm = null;
     @Override
    
-    }
+    
 
     public void moveWheel(float x,float y) {
          float fl = (y+x);
