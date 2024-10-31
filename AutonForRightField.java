@@ -5,7 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import java.time.Duration; //Imma hope this works. If not we're cooked
 @Autonomous(name="Auton For Right Field", group="Robot")
 public class AutonForRightField extends LinearOpMode {
     public DcMotor frontLeft = null;
@@ -35,10 +36,22 @@ public class AutonForRightField extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
-        if (isStopRequested()) return;
-        //I'll test this out l8r
-        moveWheel()
+          if (opModeIsActive()) {
 
+  }
+
+    }
+    public void moveForward(seconds) {
+        //sets current time
+        long durationSucks = System.CurrentTimeMillis();
+        //stops current time
+        long stop = (durationSucks + seconds*1000);
+        while (System. currentTimeMillis() < stop) {
+            //not even sure if this works or not. We can test it anyway
+            moveWheel(0,-100);
+            telemetry.addData("Fr value",fr)
+            telemetry.update();
+        }
     }
     public void  moveWheel(float x,float y) {
          float fl = (y+x);
