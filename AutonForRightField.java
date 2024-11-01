@@ -52,15 +52,15 @@ public class AutonForRightField extends LinearOpMode {
         //stops it from going greater than 1/-1
          double maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
          //powers the motor for wheels
-        frontLeft.setPower(fl/maxNumber*flModifier);
-        frontRight.setPower(fr/maxNumber*frModifier);
-        backLeft.setPower(bl/maxNumber*blModifier);
-        backRight.setPower(br/maxNumber*brModifier); 
+        frontLeft.setPower(fl/maxNumber);
+        frontRight.setPower(fr/maxNumber);
+        backLeft.setPower(bl/maxNumber);
+        backRight.setPower(br/maxNumber); 
         //Should do telemetery data thingy I hate this.
-        telemetry.addData("Front Left",fl/maxNumber*flModifier);
-        telemetry.addData("Front Right",fr/maxNumber*frModifier);
-        telemetry.addData("Back Left",bl/maxNumber*blModifier);
-        telemetry.addData("Back Right",br/maxNumber*brModifier);
+        telemetry.addData("Front Left",fl/maxNumber;
+        telemetry.addData("Front Right",fr/maxNumber);
+        telemetry.addData("Back Left",bl/maxNumber);
+        telemetry.addData("Back Right",br/maxNumber);
     }
    public void turn(boolean rotateLeft, boolean rotateRight) {
         double fl, fr, bl, br;
@@ -95,16 +95,16 @@ public class AutonForRightField extends LinearOpMode {
             }
         fl = fr = bl = br = 0;
         if (rotateRight) {
-            fl = 0.5*flModifier;
-            fr = 0.5*frModifier;
-            bl = 0.5*blModifier;
-            br = 0.5*brModifier;
+            fl = 0.5;
+            fr = 0.5;
+            bl = 0.5;
+            br = 0.5;
          }
          if (rotateLeft) {
-             fl = -0.5*flModifier;
-             fr = -0.5*frModifier;
-             bl = -0.5*blModifier;
-             br = -0.5*brModifier;
+             fl = -0.5;
+             fr = -0.5;
+             bl = -0.5;
+             br = -0.5;
          }
     } 
     public void linearVertical(float verticalPower) {
