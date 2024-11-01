@@ -89,8 +89,6 @@ public class MotorControlsForTeleOp extends LinearOpMode {
          double clawPosY = -RsFault.left_stick_y;
          double clawOpen = RsFault.left_bumper;
          double clawClose = RsFault.right_bumper;
-        //Bad stopper code
-         boolean stopper = RsFault.cross;
          
          
          
@@ -192,20 +190,23 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         //Arm Code I USED TRIGGERS LETS GOOO
         Arm.setPower(-armClose);
           //Imma pray this works
-        if (stopper) {
-             Arm.setPower(-0.5);
-             armClose = 0;
-             sleep(10);
-             Arm.setPower(-0.4);
-             sleep(10);
-             Arm.setPower(-0.3);
-             sleep(10);
-             Arm.setPower(-0.2);
-             sleep(10);
-             Arm.setPower(-0.1);
-             sleep(10);
-             Arm.setPower(0);
-        }
+        if (armClose == 0) {
+            Arm.setPower(-0.5);
+            sleep(1);
+            Arm.setPower(-0.3);
+            sleep(1);
+            Arm.setPower(-0.1);
+            sleep(1);
+            Arm.setPower(-0.05);
+            sleep(1);
+            Arm.setPower(-0.025);
+            sleep(1);
+            Arm.setPower(0);
+            sleep(1);
+            Arm.setPower(0.025);
+            sleep(1);
+            Arm.setPower(0.5);
+            }
 
           
         if (clawPosY > 0) {
