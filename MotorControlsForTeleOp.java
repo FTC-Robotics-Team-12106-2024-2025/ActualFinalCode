@@ -85,6 +85,7 @@ public class MotorControlsForTeleOp extends LinearOpMode {
          double clawPosY = -RsFault.left_stick_y;
          double clawOpen = RsFault.left_bumper;
          double clawClose = RsFault.right_bumper;
+          boolean stopper = RsFault.cross;
          
          
          double wheelCPR = 423.2116; //Counts per revolution
@@ -186,7 +187,7 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         Arm.setPower(armOpen);
         Arm.setPower(-armClose);
           //Imma pray this works
-        if (armClose == 0) {
+        if (stopper) {
              sleep(0);
              Arm.setPower(-0.4);
              sleep(10);
