@@ -9,14 +9,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 //import com.qualcomm.hardware.bosch.BNO055IMU;
 //import com.qualcomm.robotcore.hardware.SoundPlayer;
 
 @TeleOp
 
 public class MotorControlsForTeleOp extends LinearOpMode {
-     DcMotorEx Arm;
      Gamepad stupidGamepad = new Gamepad();
      Gamepad RsFault = new Gamepad();
     @Override
@@ -29,10 +27,9 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         DcMotor backLeft = hardwareMap.get(DcMotor.class, "backLeft"); 
         DcMotor backRight = hardwareMap.get(DcMotor.class, "backRight");
         //Motors for Linear Slide
-        DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
-        DcMotor rightSlide = hardwareMap.get(DcMotor.class, "rightSlide"); //Slot 1
+DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
         
-        DcMotor Arm = hardwareMap.get(DcMotor.class,"Arm");
+       DcMotor Arm = hardwareMap.get(DcMotor.class,"Arm");
         Servo clawRotate = hardwareMap.get(Servo.class,"clawRotate");
         Servo clawClamp = hardwareMap.get(Servo.class,"clawClamp");
         //resets motor
@@ -40,16 +37,14 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         //turns motor back on
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftSlide.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        
         
         /*
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -62,7 +57,6 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         imu.initialize(parameters);*/
         waitForStart();
-         
         
         if (isStopRequested()) return;
         
@@ -70,13 +64,12 @@ public class MotorControlsForTeleOp extends LinearOpMode {
          stupidGamepad.copy(gamepad1);
          RsFault.copy(gamepad2);
         //Makes the robot go move I hope. Prob not going to work
-         double y = -stupidGamepad.left_stick_y;
-         double x = stupidGamepad.left_stick_x;
+         float y = -stupidGamepad.left_stick_y;
+         float x = stupidGamepad.left_stick_x;
         
          boolean rotateRight = stupidGamepad.right_bumper;
          boolean rotateLeft = stupidGamepad.left_bumper;
          boolean honk = stupidGamepad.left_stick_button;
-         boolean pidTest = stupidGamepad.a;
          
          //For up-movement of linear slide
          boolean verticalUp = RsFault.dpad_up;
@@ -87,10 +80,9 @@ public class MotorControlsForTeleOp extends LinearOpMode {
          double armClose = RsFault.right_trigger;
          double clawPosX = RsFault.left_stick_x;
          double clawPosY = -RsFault.left_stick_y;
-         double clawOpen = RsFault.left_bumper;
-         double clawClose = RsFault.right_bumper;
          
-         
+         boolean clawOpen = RsFault.left_bumper;
+         boolean clawClose = RsFault.right_bumper;
          
          double wheelCPR = 423.2116; //Counts per revolution
          double linearCPR = 72.1; 
@@ -133,15 +125,11 @@ public class MotorControlsForTeleOp extends LinearOpMode {
                 brModifier = leadMotor/Brrevolutions;
             }
         //Linear Slide
-        /*
               if (Lsrevolutions > linearMotor) {
                   lsModifier = linearMotor/Lsrevolutions;
                   
               }
-              if (Rsrevolutions > linearMotor) {
-                  rsModifier = linearMotor/Rsrevolutions;
-              }
-              */
+
               
          double fl = (y+x);
          double fr = (x-y);
@@ -170,11 +158,13 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         //stops it from going greater than 1/-1
          double maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
          //powers the motor for wheels
-        frontLeft.setPower(fl/maxNumber;
+        frontLeft.setPower(fl/maxNumber);
         frontRight.setPower(fr/maxNumber);
         backLeft.setPower(bl/maxNumber);
         backRight.setPower(br/maxNumber); 
+        //temp code
         
+        /*
         if (verticalUp) {
             leftSlide.setPower(0.5);
             rightSlide.setPower(0.5);
@@ -187,9 +177,10 @@ public class MotorControlsForTeleOp extends LinearOpMode {
             leftSlide.setPower(0);
             rightSlide.setPower(0);
         }
+        */
         //Arm Code I USED TRIGGERS LETS GOOO
         Arm.setPower(-armClose);
-          //Imma pray this works
+        //lowers by tenth of a second
         if (armClose == 0) {
             Arm.setPower(-0.5);
             sleep(1);
@@ -208,7 +199,6 @@ public class MotorControlsForTeleOp extends LinearOpMode {
             Arm.setPower(0.5);
             }
 
-          
         if (clawPosY > 0) {
             clawRotate.setPosition(1);
         } 
@@ -221,13 +211,14 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         if (clawPosX > 0) {
             clawRotate.setPosition(1.5);
         }
-     //Imma hope this works
+        //more if statements YAY!!!
         if (clawOpen) {
-             clawClamp.setPosition(1);
+            clawClamp.setPosition(1);
         }
         if (clawClose) {
-             clawClamp.setPosition(0);
+            clawClamp.setPosition(0);
         }
+        
   
         /*double botHeading = imu.getAngularOrientation().firstAngle;
          
@@ -268,4 +259,6 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         }
     }
 }
+
+
 
