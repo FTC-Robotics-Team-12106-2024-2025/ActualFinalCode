@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -17,6 +18,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class MotorControlsForTeleOp extends LinearOpMode {
      Gamepad stupidGamepad = new Gamepad();
      Gamepad RsFault = new Gamepad();
+     
+     public int armThing = 0;
     @Override
     
     //Defines the motor
@@ -27,22 +30,21 @@ public class MotorControlsForTeleOp extends LinearOpMode {
         DcMotor backLeft = hardwareMap.get(DcMotor.class, "backLeft"); 
         DcMotor backRight = hardwareMap.get(DcMotor.class, "backRight");
         //Motors for Linear Slide
-DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
+        //DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
         
-       DcMotor Arm = hardwareMap.get(DcMotor.class,"Arm");
+       DcMotor armOne = hardwareMap.get(DcMotor.class,"armOne");
+       DcMotor armTwo = hardwareMap.get(DcMotor.class,"armTwo");
         Servo clawRotate = hardwareMap.get(Servo.class,"clawRotate");
         Servo clawClamp = hardwareMap.get(Servo.class,"clawClamp");
-        //resets motor
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //turns motor back on
-        frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armOne.setTargetPosition(0);
+        armTwo.setTargetPosition(0);
+        armOne.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armTwo.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armOne.setPower(.65);
+        armTwo.setPower(.65);
+        
+        double wrist = .4;
 
         
         
@@ -66,6 +68,20 @@ DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
         //Makes the robot go move I hope. Prob not going to work
          float y = -stupidGamepad.left_stick_y;
          float x = stupidGamepad.left_stick_x;
+         
+         if (stupidGamepad.dpad_left) {
+             x = -0.25f;
+         }
+         if (stupidGamepad.dpad_right) {
+             x = 0.25f;
+         }
+         if (stupidGamepad.dpad_up) {
+             y = 0.25f;
+         }
+         if (stupidGamepad.dpad_down) {
+             y = -0.25f;
+         }
+         
         
          boolean rotateRight = stupidGamepad.right_bumper;
          boolean rotateLeft = stupidGamepad.left_bumper;
@@ -75,60 +91,16 @@ DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
          boolean verticalUp = RsFault.dpad_up;
          //For down-movement of linear slide
          boolean verticalDown = RsFault.dpad_down;
-         
-         double armOpen = RsFault.left_trigger;
          double armClose = RsFault.right_trigger;
+         double armOpen = RsFault.left_trigger;
          double clawPosX = RsFault.left_stick_x;
          double clawPosY = -RsFault.left_stick_y;
          
          boolean clawOpen = RsFault.left_bumper;
          boolean clawClose = RsFault.right_bumper;
-         
          double wheelCPR = 423.2116; //Counts per revolution
          double linearCPR = 72.1; 
-         
-         int Flposition = frontLeft.getCurrentPosition();
-         int Frposition = frontRight.getCurrentPosition();
-         int Blposition = backLeft.getCurrentPosition();
-         int Brposition = backRight.getCurrentPosition();
-         //YAY MORE VARIABLES
-         double Flrevolutions = Flposition/wheelCPR;
-         double Frrevolutions = Frposition/wheelCPR;
-         double Blrevolutions = Blposition/wheelCPR;
-         double Brrevolutions = Brposition/wheelCPR;
-         //Linear Slides Revolutions
-         
-        /*int Lsposition = leftSlide.getCurrentPosition();
-         int Rsposition = rightSlide.getCurrentPosition();
-         double Lsrevolutions = Lsposition/linearCPR;
-         double Rsrevolutions = Rsposition/linearCPR;
-        double lsModifier = 1;
-         double rsModifier = 1;*/
-         
-         double leadMotor = Math.min(Math.min(Flrevolutions,Frrevolutions),Math.min(Blrevolutions,Brrevolutions));
-         //Modifier Variables YAY
-        // double linearMotor = Math.min(Lsposition,Rsposition);
-         double flModifier = 1;
-         double frModifier = 1;
-         double blModifier = 1;
-         double brModifier = 1;
-            if (Flrevolutions > leadMotor) {
-                flModifier = leadMotor/Flrevolutions;
-            }
-            if (Frrevolutions > leadMotor) {
-                frModifier = leadMotor/Frrevolutions;
-            }
-            if (Blrevolutions > leadMotor) {
-                blModifier = leadMotor/Blrevolutions;
-            }
-            if (Brrevolutions > leadMotor) {
-                brModifier = leadMotor/Brrevolutions;
-            }
-        //Linear Slide
-              if (Lsrevolutions > linearMotor) {
-                  lsModifier = linearMotor/Lsrevolutions;
-                  
-              }
+
 
               
          double fl = (y+x);
@@ -136,16 +108,16 @@ DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
          double bl = (y-x);
          double br = (-y-x);
            if (rotateRight) {
-            fl = 1;
-            fr = 1;
-            bl = 1;
-            br = 1;
+            fl = 0.85;
+            fr = 0.85;
+            bl = 0.85;
+            br = 0.85;
          }
          if (rotateLeft) {
-             fl = -1;
-             fr = -1;
-             bl = -1;
-             br = -1;
+             fl = -0.85;
+             fr = -0.85;
+             bl = -0.85;
+             br = -0.85;
          }
         if (rotateRight && rotateLeft == false) {
             if (x == 0 && y == 0) {
@@ -158,67 +130,153 @@ DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
         //stops it from going greater than 1/-1
          double maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
          //powers the motor for wheels
-        frontLeft.setPower(fl/maxNumber);
-        frontRight.setPower(fr/maxNumber);
-        backLeft.setPower(bl/maxNumber);
-        backRight.setPower(br/maxNumber); 
+        frontLeft.setPower(fl/maxNumber*0.5);
+        frontRight.setPower(fr/maxNumber*0.5);
+        backLeft.setPower(bl/maxNumber*0.5);
+        backRight.setPower(br/maxNumber*0.5); 
+        
         //temp code
         
         /*
         if (verticalUp) {
             leftSlide.setPower(0.5);
-            rightSlide.setPower(0.5);
         }                       //Prob works
         if (verticalDown) {
             leftSlide.setPower(-0.5);
-            rightSlide.setPower(-0.5);
         }
             if (verticalUp && verticalDown == false) {
             leftSlide.setPower(0);
-            rightSlide.setPower(0);
         }
         */
         //Arm Code I USED TRIGGERS LETS GOOO
-        Arm.setPower(-armClose);
+        // double armPower= armOpen-armClose;
+        // armOne.setPower(armPower*0.65);
+        // // armOne.setPower(-armOpen);
+        // // armTwo.setPower(-armOpen);
+        // armTwo.setPower(armPower*0.65);
         //lowers by tenth of a second
-        if (armClose == 0) {
-            Arm.setPower(-0.5);
+           /* if (fuRoshan > 0) {
+            armOne.setPower(-0.5);
+            armTwo.setPower(-0.5);
             sleep(1);
-            Arm.setPower(-0.3);
+            armOne.setPower(-0.3);
+            armTwo.setPower(-0.3);
             sleep(1);
-            Arm.setPower(-0.1);
+            armOne.setPower(-0.1);
+            armTwo.setPower(-0.1);
             sleep(1);
-            Arm.setPower(-0.05);
+            armOne.setPower(-0.05);
+            armTwo.setPower(-0.05);
             sleep(1);
-            Arm.setPower(-0.025);
+            armOne.setPower(-0.025);
+            armTwo.setPower(-0.025);
             sleep(1);
-            Arm.setPower(0);
+            armOne.setPower(0);
+            armTwo.setPower(0);
             sleep(1);
-            Arm.setPower(0.025);
-            sleep(1);
-            Arm.setPower(0.5);
-            }
-
-        if (clawPosY > 0) {
-            clawRotate.setPosition(1);
-        } 
-        if (clawPosY < 0) {
-            clawRotate.setPosition(0);
+            armTwo.setPower(0.025);
+            armOne.setPower(0.025);
+            
+            }*/
+            
+        if (RsFault.dpad_up) {
+            armThing -= 5;
         }
-        if (clawPosX < 0) {
-            clawRotate.setPosition(0.5);
+        if (RsFault.dpad_down) {
+            armThing += 5;
         }
-        if (clawPosX > 0) {
-            clawRotate.setPosition(1.5);
+        if (RsFault.dpad_right) {
+            armThing--;
         }
-        //more if statements YAY!!!
-        if (clawOpen) {
-            clawClamp.setPosition(1);
+        if (RsFault.dpad_left) {
+            armThing++;
         }
-        if (clawClose) {
-            clawClamp.setPosition(0);
+        if (armThing <= -126) {
+            armThing = -126;
+        }
+        if (armThing >= -5) {
+            armThing = -5;
         }
         
+        
+        if (RsFault.cross) {
+            armThing = -7;
+        }
+        if (RsFault.triangle) {
+            armThing = -126;            
+        }
+        if (RsFault.square) {
+            armThing = -72;
+        }
+
+        // if (Math.abs(armOne.getCurrentPosition() - armThing) <= 2) {
+        //     armOne.setTargetPosition(armOne.getCurrentPosition());
+        //     armTwo.setTargetPosition(armTwo.getCurrentPosition());
+        // } else {
+        //     armOne.setTargetPosition(armThing);
+        //     armTwo.setTargetPosition(armThing);
+        // }
+        
+        armOne.setTargetPosition(armThing);
+        armTwo.setTargetPosition(armThing);
+            
+        telemetry.addData("Arm One: ", armOne.getCurrentPosition());
+        telemetry.addData("Arm Two: ", armTwo.getCurrentPosition());
+
+       
+       if (clawOpen) {
+           clawClamp.setPosition(1);
+       }
+       if (clawClose) {
+           clawClamp.setPosition(0);
+       }
+       
+       if (RsFault.left_trigger >= .9) {
+           wrist -= .05;
+       }
+       if (RsFault.right_trigger >= .9) {
+           wrist += .05;
+       }
+       if (wrist >= 1) {
+           wrist = 1;
+       }
+       if (wrist <= 0) {
+           wrist = 0;
+       }
+       if (RsFault.b) {
+           wrist = .4;
+       }
+       clawRotate.setPosition(wrist);
+       
+    //     double clawPosition = clawClamp.getPosition();
+    //     if (clawPosY > 0) {
+    //         clawRotate.setPosition(0.5);
+    //     } 
+    //     if (clawPosY < 0) {
+    //         clawRotate.setPosition(0);
+    //     }
+    //     if (clawPosX < 0) {
+    //         clawRotate.setPosition(0.25);
+    //     }
+    //     if (clawPosX > 0) {
+    //         clawRotate.setPosition(0.75);
+    //     }
+    // double clawMove = 0;
+    //     //more if statements YAY!!!
+    //     int clawTest = 0;
+    //     if (clawOpen) {
+    //         clawClamp.setPosition(0);
+    //         clawTest = 1;
+    //         telemetry.addData("Actually Reads Input: ", clawTest);
+
+    //     }
+    //     if (clawClose) {
+    //         clawClamp.setPosition(1);
+    //         clawTest = 2;
+    //         telemetry.addData("Reads Input: ", clawTest);
+    //     }
+
+         
   
         /*double botHeading = imu.getAngularOrientation().firstAngle;
          
@@ -236,13 +294,13 @@ DcMotor leftSlide = hardwareMap.get(DcMotor.class, "leftSlide"); //Slot 0
          double br = (-triY-triX);
          */
         //stops it from going greater than 1/-1
-         maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
-         //powers the motor for wheels
-        frontLeft.setPower(fl/maxNumber);
-        frontRight.setPower(fr/maxNumber);
-        backLeft.setPower(bl/maxNumber);
-        backRight.setPower(br/maxNumber); 
-        
+        //  maxNumber = Math.max(Math.abs(x)+Math.abs(y),1);
+        //  //powers the motor for wheels
+        // frontLeft.setPower(fl/maxNumber);
+        // frontRight.setPower(fr/maxNumber);
+        // backLeft.setPower(bl/maxNumber);
+        // backRight.setPower(br/maxNumber); 
+        telemetry.update();
     
         
        /*int soundID = hardwareMap.apContext.getResources().getIdentifier("horn", "raw", hardwareMap.appContext.getPackageName());
